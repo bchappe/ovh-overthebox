@@ -1,0 +1,52 @@
+
+########################## YOUR HOST CONFIG .cfg ##################
+
+define host{
+        use                             generic-host            ; Name of host template to use
+        host_name                       YOUR_MACHINE
+        alias                           YOUR_MACHINE
+        address                         192.168.1.1 (IP of your Box)
+        }
+
+# Just a ping with pnp service on Nagios
+define service{
+        use                             generic-service,pnp-service         ; Name of service template to use
+        host_name                       YOUR_MACHINE
+        service_description             PING
+        check_command                   check_ping!100.0,20%!200.0,60%
+        }
+#
+define service{
+        use                             generic-service,pnp-service         ; Name of service template to use
+        host_name                       YOUR_MACHINE
+        service_description             CPU LOAD
+        check_command                   check_snmp_cpu!public!99!100
+        }
+
+define service{
+        use                             generic-service,pnp-service         ; Name of service template to use
+        host_name                       YOUR_MACHINE
+        service_description             MEMORY USE
+        check_command                   check_snmp_mem!public!80.20!90.30
+        }
+
+###################### YOUR COMMANDS.cfg #######################
+
+define command{
+        command_name    check_snmp_cpu
+        command_line    $USER1$/check_snmp_cpu.sh -H $HOSTADDRESS$ -c public -w 80 -c 90
+        }
+
+define command{
+        command_name    check_snmp_mem
+        command_line    $USER1$/check_snmp_mem.sh -H $HOSTADDRESS$ -C public -w 80,20 -c 90,30
+        }
+        
+ ##################### THE SCRIPT TO TEST ##################
+ 
+ You can download and execute the script from nagios https://exchange.nagios.org/directory/Plugins
+ Many thanks to the Author
+ 
+ 
+ 
+
