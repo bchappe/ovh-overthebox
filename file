@@ -43,9 +43,42 @@ define command{
         }
         
  ##################### THE SCRIPT TO TEST ##################
+ #####################       README       ##################
  
  You can download and execute the script from nagios https://exchange.nagios.org/directory/Plugins
  Many thanks to the Author
+ You 
+ 
+ ########################### INSTRUCTIONS ################
+ Yohan Lamy for the "check_snmp_cpu"
+ https://exchange.nagios.org/directory/Plugins/System-Metrics/CPU-Usage-and-Load/Check-CPU-LOAD-using-SNMP/detailshttps://exchange.nagios.org/directory/Plugins/System-Metrics/CPU-Usage-and-Load/Check-CPU-LOAD-using-SNMP/details
+ 
+ - Download the script
+ - Edited the script and change the commands of the base rep 
+ 
+ # Commands
+CMD_BASENAME="/usr/bin/basename"
+CMD_SNMPWALK="/usr/bin/snmpwalk"
+CMD_AWK="/usr/bin/awk"
+CMD_EXPR="/usr/bin/expr"
+CMD_GREP="/bin/grep"
+
+# Add the autorisation to execute the script
+chmod +x check_snmp_cpu 
+
+For test the script on your OTB
+./check_snmp_cpu.sh -H 192.168.254.254 -C public -w 80 -c 90
+
+Enjoy yourself ;)
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  
