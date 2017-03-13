@@ -15,7 +15,7 @@ define service{
         service_description             PING
         check_command                   check_ping!100.0,20%!200.0,60%
         }
-#
+# Load of CPU with SNMP
 define service{
         use                             generic-service,pnp-service         ; Name of service template to use
         host_name                       YOUR_MACHINE
@@ -23,14 +23,16 @@ define service{
         check_command                   check_snmp_cpu!public!99!100
         }
 
+Load of MEM with SNMP
 define service{
         use                             generic-service,pnp-service         ; Name of service template to use
         host_name                       YOUR_MACHINE
         service_description             MEMORY USE
-        check_command                   check_snmp_mem!public!80.20!90.30
+        check_command                   check_snmp_mem!public!80,20!90,30
         }
 
-###################### YOUR COMMANDS.cfg #######################
+
+###################### YOUR FILE COMMANDS.cfg #######################
 
 define command{
         command_name    check_snmp_cpu
@@ -39,8 +41,9 @@ define command{
 
 define command{
         command_name    check_snmp_mem
-        command_line    $USER1$/check_snmp_mem.sh -H $HOSTADDRESS$ -C public -w 80,20 -c 90,30
+        command_line    $USER1$/check_snmp_mem.pl -H $HOSTADDRESS$ -C public -w 80,20 -c 90,30
         }
+
         
  ##################### THE SCRIPT TO TEST ##################
  #####################       README       ##################
@@ -50,7 +53,9 @@ define command{
  You 
  
  ########################### INSTRUCTIONS ################
- Yohan Lamy for the "check_snmp_cpu"
+ 
+ ##### CHECK_SNMP_CPU ######
+ Thanks to Yohan Lamy for the "check_snmp_cpu"
  https://exchange.nagios.org/directory/Plugins/System-Metrics/CPU-Usage-and-Load/Check-CPU-LOAD-using-SNMP/detailshttps://exchange.nagios.org/directory/Plugins/System-Metrics/CPU-Usage-and-Load/Check-CPU-LOAD-using-SNMP/details
  
  - Download the script
@@ -67,12 +72,17 @@ CMD_GREP="/bin/grep"
 chmod +x check_snmp_cpu 
 
 For test the script on your OTB
-./check_snmp_cpu.sh -H 192.168.254.254 -C public -w 80 -c 90
+./check_snmp_cpu.sh -H IP_OTB -C public -w 80 -c 90
 
-Enjoy yourself ;)
-
-
-
+ ##### CHECK_SNMP_MEMORY & SWAP ######
+ Thanks to Yohan Lamy for the "check_snmp_cpu"
+ http://nagios.manubulon.com/snmp_mem.html
+ 
+ - Download the script
+ - Edited the script and change the commands of the base rep 
+ 
+ 
+ Baptiste
  
  
  
